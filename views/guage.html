@@ -1,0 +1,56 @@
+<div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+        <div id="gauge-demo" >
+            <div  dx-circular-gauge="firstOptions"></div>
+            
+        </div>
+    </div>
+        <div class="col-sm-4">
+            
+            <div  dx-circular-gauge="secoundOptions">
+            
+        </div>
+
+        </div>
+
+        <div class="col-sm-4">
+            
+            <div  dx-circular-gauge="thirdOptions">
+            
+        </div>
+
+        </div>
+    </div>
+
+        
+         <div class="row">
+           <div class="col-sm-1"></div> <div class="col-sm-5">
+        <div id="gauge-demo" >
+            <div id="gauge" dx-circular-gauge="forthOptions"></div>
+           
+        </div>
+    </div>
+        <div class="col-sm-5">
+            <div id="gauge-demo col-sm-4">
+            <div id="gauge" dx-circular-gauge="fiveOptions"></div>
+            
+        </div>
+        <div class="col-sm-1"></div>
+
+        </div>
+    </div>
+    
+       
+    
+        <span ng-repeat="x in key12">
+            
+            <button  class="btn" ng-click="click(x.gaugeId)">{{x.gaugeId}}</button>
+           
+
+
+        </span>
+    <input type="range" min="1" max="100" value="{{key12.gaugeId}}" class="slider" >
+   
+
+    </div>
