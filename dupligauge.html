@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Dials Gauges</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/18.1.3/js/dx.all.js"></script>
+</head>
+<body class="dx-viewport">
+    <div class="container" ng-app="DemoApp" ng-controller="firstController">
+        <div class="row">
+            <div class="col-sm-4">
+        <div id="gauge-demo" >
+            <div id="gauge" dx-circular-gauge="firstOptions"></div>
+            
+        </div>
+    </div>
+        <div class="col-sm-4">
+            <div id="gauge-demo col-sm-4" >
+            <div id="gauge" dx-circular-gauge="secoundOptions"></div>
+            
+        </div>
+
+        </div>
+
+        <div class="col-sm-4">
+            <div id="gauge-demo col-sm-4" >
+            <div id="gauge" dx-circular-gauge="thirdOptions"></div>
+            
+        </div>
+
+        </div>
+    </div>
+
+        
+         <div class="row">
+           <div class="col-sm-1"></div> <div class="col-sm-5">
+        <div id="gauge-demo" >
+            <div id="gauge" dx-circular-gauge="forthOptions"></div>
+           
+        </div>
+    </div>
+        <div class="col-sm-5">
+            <div id="gauge-demo col-sm-4">
+            <div id="gauge" dx-circular-gauge="fiveOptions"></div>
+            
+        </div>
+        <div class="col-sm-1"></div>
+
+        </div>
+    </div>
+    
+        <div id="seasons" dx-select-box="selectBoxOptions"></div>
+
+        <span ng-repeat="x in key12">
+
+            <button  class="btn" ng-click="click(x.gaugeId)">{{x.gaugeId}}</button>
+
+        </span>
+      <!--   <div id="slider" dx-slider="slider"></div> -->
+    </div>
+        
+    </div>
+
+    <script >
+        var DemoApp = angular.module('DemoApp', ['dx']);
+
+//first
+
+
+DemoApp.controller('firstController', function DemoController($scope,$http) {
+
+    $http.get("http://192.168.1.128:5006/gaugelist") 
+      .then(function(response) {
+        $scope.key12 = response.data.result;
+  console.log($scope.key12);
+  $scope.myt($scope.key12);
+  });
+
+
+      var id;
+    $scope.click=function(id)
+    {
+        debugger;
+         $http.get("http://192.168.1.128:5006/gauge?gaugeId="+id)
+      .then(function(res){
+        $scope.key123 = res.data.result;
+        console.log($scope.key123);
+        $scope.my($scope.key123);
+      })
+
+    }
+     
+
+$scope.myt = function(object){
+    
+    $scope.value1 = object[id].TRQ;
+    $scope.value2 = object[id].PROPRPM;
+    $scope.value3 = object[id].NH;
+    $scope.value4 = object[id].ITT;
+    $scope.value5 = object[id].NL;
+    
+    $scope.firstOptions = {
+        bindingOptions: {
+            value: "value1",
+           
+        },
+        scale: {
+            startValue: 10,
+            endValue: 100,
+            tickInterval: 5,
+            label: {
+                customizeText: function (arg) {
+                    return arg.valueText + " ";
+                }
+            }
+        },
+        rangeContainer: {
+            ranges: [
+               
+                { startValue: 10, endValue: 100, color: "#ff0000" }
+            ]
+        },
+         valueIndicator: {
+                type: "twoColorNeedle",
+                color: "red",
+                secondFraction: 0.24,
+                secondColor: "#f05b41"
+            },
+        tooltip: { enabled: true },
+        title: {
+            text: "TRQ",
+            font: { size: 28 }
+        }
+    };
+
+    // 
+
+    
+    $scope.secoundOptions = {
+        bindingOptions: {
+            value: "value2",
+            subvalues: "subvalues"
+        },
+        scale: {
+            startValue: 1,
+            endValue: 1000,
+            tickInterval: 5,
+            label: {
+                customizeText: function (arg) {
+                    return arg.valueText + " ";
+                }
+            }
+        },
+        rangeContainer: {
+            ranges: [
+               
+                { startValue: 10, endValue: 1000, color: "#77DD77" }
+            ]
+        },
+        tooltip: { enabled: true },
+         valueIndicator: {
+                type: "twoColorNeedle",
+                color: "red",
+                secondFraction: 0.24,
+                secondColor: "#f05b41"
+            },
+        title: {
+            text: "PRO",
+            font: { size: 28 }
+        }
+    };
+
+     $scope.thirdOptions = {
+        bindingOptions: {
+            value: "value3",
+            subvalues: "subvalues"
+        },
+        scale: {
+            startValue: 1.0,
+            endValue: 100.0,
+            tickInterval: 5,
+            label: {
+                customizeText: function (arg) {
+                    return arg.valueText + " ";
+                }
+            }
+        },
+        rangeContainer: {
+            ranges: [
+               
+                { startValue: 10, endValue: 100, color: "#0000ff" }
+            ]
+        },
+         valueIndicator: {
+                type: "twoColorNeedle",
+                color: "red",
+                secondFraction: 0.24,
+                secondColor: "#f05b41"
+            },
+        tooltip: { enabled: true },
+        title: {
+            text: "NH",
+            font: { size: 28 }
+        }
+    };
+
+    $scope.forthOptions = {
+        bindingOptions: {
+            value: "value4",
+            subvalues: "subvalues"
+        },
+        scale: {
+            startValue: 10,
+            endValue: 100,
+            tickInterval: 5,
+            label: {
+                customizeText: function (arg) {
+                    return arg.valueText + " ";
+                }
+            }
+        },
+        rangeContainer: {
+            ranges: [
+               
+                { startValue: 10, endValue: 100, color: "#000000" }
+            ]
+        },
+         valueIndicator: {
+                type: "twoColorNeedle",
+                color: "red",
+                secondFraction: 0.24,
+                secondColor: "#f05b41"
+            },
+        tooltip: { enabled: true },
+        title: {
+            text: "ITT",
+            font: { size: 28 }
+        }
+    };
+
+        $scope.fiveOptions = {
+        bindingOptions: {
+            value: "value5",
+            subvalues: "subvalues"
+        },
+        scale: {
+            startValue: 10,
+            endValue: 1000,
+            tickInterval: 5,
+            label: {
+                customizeText: function (arg) {
+                    return arg.valueText + " ";
+                }
+            }
+        },
+        rangeContainer: {
+            ranges: [
+               
+                { startValue: 10, endValue: 1000, color: "#dd00dd" }
+            ]
+        },
+         valueIndicator: {
+                type: "twoColorNeedle",
+                color: "red",
+                secondFraction: 0.24,
+                secondColor: "#f05b41"
+            },
+        tooltip: { enabled: true },
+        title: {
+            text: "NL",
+            font: { size: 28 }
+        }
+    };
+    
+
+    //   $scope.selectBoxOptions = {
+    //     width: 150,
+    //     dataSource: object,
+    //     displayExpr: "gaugeId",
+    //     value: object[1],
+    //     onValueChanged: function(e) {
+    //         var value = e.value;
+    //         $scope.value = value.gaugeId;
+          
+    //     }
+    // };
+
+     // $scope.slider= {
+     //        min: 0,
+     //        max: 200,
+     //        bindingOptions: {
+     //            value: "value1"
+     //        },
+     //        width: 255
+     //    }
+   
+}
+});
+
+//second
+
+
+
+//third
+
+
+
+//fouth
+
+
+//five
+
+
+    </script>
+</body>
+</html>
